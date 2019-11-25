@@ -4,6 +4,7 @@ import { NgForm, NgModel } from '@angular/forms';
 import { DataService } from '../data/data.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Time } from '@angular/common';
 
 @Component({
   selector: 'app-user-settings-form',
@@ -20,6 +21,11 @@ export class UserSettingsFormComponent implements OnInit {
     notes: null
   };
 
+  userRating = 0;
+  maxRating = 10;
+  startTime: Date;
+  startDate: Date;
+  singleModel = "On";
   //spread operator is the '...'
   userSettings : UserSettings = { ...this.originalUserSettings };
   postError = false;
@@ -31,6 +37,9 @@ export class UserSettingsFormComponent implements OnInit {
 
   ngOnInit() {
     this.subscriptionTypes = this.dataService.getSubscriptionTypes();
+
+    this.startDate = new Date();
+    this.startTime = new Date();
   }
 
   onBlur(field : NgModel){
@@ -44,18 +53,20 @@ export class UserSettingsFormComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    console.log('in onSubmit: ',  form.valid);
+    //console.log('in onSubmit: ',  form.valid);
+    console.log('in onSubmit: ',  form.value);
 
-    if(form.valid) {
-      this.dataService.postUserSettingsForm(this.userSettings).subscribe(
-        result => console.log('success: ', result),
-        error => this.onHttpError(error)
-      );
-    }
-    else{
-      this.postError = true;
-      this.postErrorMessage = "Please fix above errors";
-    }
+    // this code is to post
+    // if(form.valid) {
+    //   this.dataService.postUserSettingsForm(this.userSettings).subscribe(
+    //     result => console.log('success: ', result),
+    //     error => this.onHttpError(error)
+    //   );
+    // }
+    // else{
+    //   this.postError = true;
+    //   this.postErrorMessage = "Please fix above errors";
+    // }
    }
 
 }
